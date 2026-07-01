@@ -2,7 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodSchema, ZodError } from 'zod';
 import { ValidationError } from '@lib/errors/app-error.js';
 
-export const validateRequest = (schema: ZodSchema) => {
+type ValidatedRequestParts = {
+  body?: unknown;
+  params?: unknown;
+  query?: unknown;
+};
+
+export const validateRequest = (schema: ZodSchema<ValidatedRequestParts>) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {
       const validated = schema.parse({
@@ -34,7 +40,7 @@ export const validateRequest = (schema: ZodSchema) => {
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorSources = error.errors.map((err) => ({
+        const errorSources = error.issues.map((err) => ({
           field: err.path.join('.'),
           message: err.message,
         }));

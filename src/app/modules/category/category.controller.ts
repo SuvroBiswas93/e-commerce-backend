@@ -11,7 +11,7 @@ export class CategoryController {
   }
 
   async getById(req: Request, res: Response): Promise<void> {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const category = await categoryService.getCategoryById(id);
     res.status(200).json(
       successResponse(200, 'Category fetched successfully', category)
