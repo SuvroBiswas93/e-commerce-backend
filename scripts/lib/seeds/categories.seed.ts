@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
 import { generateSlug } from '../../../src/utils/generate-slug.js';
-
-const prisma = new PrismaClient();
 
 export const categoriesData = [
   { name: 'Men\'s Shoes' },
@@ -16,8 +14,8 @@ export const categoriesData = [
   { name: 'Sports & Outdoors' },
 ];
 
-export async function seedCategories() {
-  console.log('🌱 Seeding categories...');
+export async function seedCategories(prisma: PrismaClient) {
+  console.log('Seeding categories...');
 
   const createdCategories = [];
 
@@ -34,7 +32,7 @@ export async function seedCategories() {
     });
 
     createdCategories.push(category);
-    console.log(`✓ Created category: ${category.name}`);
+    console.log(`Created category: ${category.name}`);
   }
 
   return createdCategories;

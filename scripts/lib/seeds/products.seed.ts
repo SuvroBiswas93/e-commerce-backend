@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import type { PrismaClient } from '@prisma/client';
 
 export const productsData = [
   // Men's Shoes
@@ -9,9 +7,7 @@ export const productsData = [
     description: 'Premium quality leather oxford shoes for professional and casual wear',
     price: 129.99,
     thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
-    images: [
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
-    ],
+    images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80'],
     stock: 50,
     rating: 4.5,
     categorySlug: 'mens-shoes',
@@ -20,8 +16,8 @@ export const productsData = [
     title: 'Running Sneakers Pro',
     description: 'Lightweight and comfortable running shoes with advanced cushioning',
     price: 89.99,
-    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&q=80'],
     stock: 75,
     rating: 4.7,
     categorySlug: 'mens-shoes',
@@ -30,10 +26,30 @@ export const productsData = [
     title: 'Casual Canvas Sneakers',
     description: 'Versatile canvas sneakers perfect for everyday wear',
     price: 59.99,
-    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&q=80'],
     stock: 100,
     rating: 4.3,
+    categorySlug: 'mens-shoes',
+  },
+  {
+    title: 'Slip-on Loafers',
+    description: 'Elegant slip-on loafers for a polished casual look',
+    price: 79.99,
+    thumbnail: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80'],
+    stock: 60,
+    rating: 4.4,
+    categorySlug: 'mens-shoes',
+  },
+  {
+    title: 'Waterproof Hiking Boots',
+    description: 'Durable waterproof boots for outdoor adventures',
+    price: 149.99,
+    thumbnail: 'https://images.unsplash.com/photo-1520637561964-e2e0f2f0ff56?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1520637561964-e2e0f2f0ff56?w=400&q=80'],
+    stock: 40,
+    rating: 4.8,
     categorySlug: 'mens-shoes',
   },
 
@@ -52,8 +68,8 @@ export const productsData = [
     title: 'Comfortable Flats',
     description: 'All-day comfortable flat shoes for women',
     price: 69.99,
-    thumbnail: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80'],
     stock: 85,
     rating: 4.4,
     categorySlug: 'womens-shoes',
@@ -62,10 +78,30 @@ export const productsData = [
     title: 'Sporty Women\'s Trainers',
     description: 'Stylish and comfortable trainers for active women',
     price: 94.99,
-    thumbnail: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400&q=80'],
     stock: 65,
     rating: 4.5,
+    categorySlug: 'womens-shoes',
+  },
+  {
+    title: 'Ankle Boots with Heel',
+    description: 'Trendy ankle boots perfect for fall and winter',
+    price: 119.99,
+    thumbnail: 'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400&q=80'],
+    stock: 55,
+    rating: 4.3,
+    categorySlug: 'womens-shoes',
+  },
+  {
+    title: 'Strappy Summer Sandals',
+    description: 'Light and breathable sandals for warm weather',
+    price: 49.99,
+    thumbnail: 'https://images.unsplash.com/photo-1603487742131-4e4ab0ec2024?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1603487742131-4e4ab0ec2024?w=400&q=80'],
+    stock: 90,
+    rating: 4.2,
     categorySlug: 'womens-shoes',
   },
 
@@ -92,12 +128,32 @@ export const productsData = [
   },
   {
     title: 'USB-C Multi Hub',
-    description: '7-in-1 USB-C hub with multiple ports',
+    description: '7-in-1 USB-C hub with multiple ports including HDMI and SD card',
     price: 79.99,
     thumbnail: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400&q=80',
     images: ['https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400&q=80'],
     stock: 150,
     rating: 4.4,
+    categorySlug: 'electronics',
+  },
+  {
+    title: 'Wireless Charging Pad',
+    description: 'Fast wireless charger compatible with all Qi devices',
+    price: 29.99,
+    thumbnail: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400&q=80'],
+    stock: 180,
+    rating: 4.5,
+    categorySlug: 'electronics',
+  },
+  {
+    title: 'Smart Speaker with Alexa',
+    description: 'Voice-controlled smart speaker with premium sound',
+    price: 129.99,
+    thumbnail: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400&q=80'],
+    stock: 90,
+    rating: 4.7,
     categorySlug: 'electronics',
   },
 
@@ -116,8 +172,8 @@ export const productsData = [
     title: 'Mid-Range Smartphone',
     description: 'Perfect balance of price and performance',
     price: 599.99,
-    thumbnail: 'https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&q=80'],
     stock: 80,
     rating: 4.5,
     categorySlug: 'smartphones',
@@ -126,10 +182,30 @@ export const productsData = [
     title: 'Budget Smartphone',
     description: 'Affordable smartphone with essential features',
     price: 299.99,
-    thumbnail: 'https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&q=80'],
     stock: 150,
     rating: 4.2,
+    categorySlug: 'smartphones',
+  },
+  {
+    title: 'Compact Smartphone Mini',
+    description: 'Small form-factor phone with flagship camera',
+    price: 799.99,
+    thumbnail: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&q=80'],
+    stock: 45,
+    rating: 4.6,
+    categorySlug: 'smartphones',
+  },
+  {
+    title: 'Gaming Phone',
+    description: 'High-refresh-rate display with dedicated gaming features',
+    price: 899.99,
+    thumbnail: 'https://images.unsplash.com/photo-1603912699214-92627f304eb6?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1603912699214-92627f304eb6?w=400&q=80'],
+    stock: 35,
+    rating: 4.7,
     categorySlug: 'smartphones',
   },
 
@@ -148,8 +224,8 @@ export const productsData = [
     title: 'Business Laptop',
     description: 'Reliable laptop for business and everyday use',
     price: 899.99,
-    thumbnail: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80'],
     stock: 50,
     rating: 4.4,
     categorySlug: 'laptops',
@@ -158,10 +234,30 @@ export const productsData = [
     title: 'Ultrabook Lightweight',
     description: 'Portable and lightweight laptop for travelers',
     price: 1299.99,
-    thumbnail: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80'],
     stock: 40,
     rating: 4.6,
+    categorySlug: 'laptops',
+  },
+  {
+    title: '2-in-1 Convertible Laptop',
+    description: 'Versatile laptop with touchscreen and tablet mode',
+    price: 1499.99,
+    thumbnail: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&q=80'],
+    stock: 30,
+    rating: 4.5,
+    categorySlug: 'laptops',
+  },
+  {
+    title: 'Gaming Laptop',
+    description: 'Powerful laptop with dedicated GPU for gaming',
+    price: 2499.99,
+    thumbnail: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&q=80'],
+    stock: 20,
+    rating: 4.9,
     categorySlug: 'laptops',
   },
 
@@ -170,8 +266,8 @@ export const productsData = [
     title: 'Organic Whole Wheat Bread',
     description: 'Fresh organic bread made with whole wheat flour',
     price: 4.99,
-    thumbnail: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&q=80'],
     stock: 500,
     rating: 4.5,
     categorySlug: 'groceries',
@@ -196,6 +292,26 @@ export const productsData = [
     rating: 4.6,
     categorySlug: 'groceries',
   },
+  {
+    title: 'Mixed Nuts Premium Pack',
+    description: 'Assorted premium nuts roasted to perfection',
+    price: 19.99,
+    thumbnail: 'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&q=80'],
+    stock: 250,
+    rating: 4.4,
+    categorySlug: 'groceries',
+  },
+  {
+    title: 'Extra Virgin Olive Oil',
+    description: 'Cold-pressed extra virgin olive oil from Italy',
+    price: 24.99,
+    thumbnail: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&q=80'],
+    stock: 180,
+    rating: 4.8,
+    categorySlug: 'groceries',
+  },
 
   // Beauty
   {
@@ -212,8 +328,8 @@ export const productsData = [
     title: 'Organic Shampoo',
     description: 'Natural shampoo made with organic ingredients',
     price: 19.99,
-    thumbnail: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1559551213-d0152f7ef267?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1559551213-d0152f7ef267?w=400&q=80'],
     stock: 250,
     rating: 4.5,
     categorySlug: 'beauty',
@@ -222,10 +338,30 @@ export const productsData = [
     title: 'Vitamin C Serum',
     description: 'Brightening vitamin C serum for glowing skin',
     price: 44.99,
-    thumbnail: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80'],
     stock: 120,
     rating: 4.7,
+    categorySlug: 'beauty',
+  },
+  {
+    title: 'Sunscreen SPF 50',
+    description: 'Broad-spectrum sunscreen with SPF 50 protection',
+    price: 24.99,
+    thumbnail: 'https://images.unsplash.com/photo-1558837616-5e8c5b6a7e9e?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1558837616-5e8c5b6a7e9e?w=400&q=80'],
+    stock: 160,
+    rating: 4.6,
+    categorySlug: 'beauty',
+  },
+  {
+    title: 'Lipstick Set Matte',
+    description: 'Set of 5 long-lasting matte lipsticks',
+    price: 39.99,
+    thumbnail: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400&q=80'],
+    stock: 100,
+    rating: 4.3,
     categorySlug: 'beauty',
   },
 
@@ -234,8 +370,8 @@ export const productsData = [
     title: 'Classic White T-Shirt',
     description: '100% cotton comfortable t-shirt',
     price: 19.99,
-    thumbnail: 'https://images.unsplash.com/photo-1577537453e3e44ceab1ee1ac3cf8e9c39ab4e71?w=400&q=80',
-    images: ['https://images.unsplash.com/photo-1577537453e3e44ceab1ee1ac3cf8e9c39ab4e71?w=400&q=80'],
+    thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80'],
     stock: 300,
     rating: 4.3,
     categorySlug: 'clothing',
@@ -260,27 +396,47 @@ export const productsData = [
     rating: 4.5,
     categorySlug: 'clothing',
   },
+  {
+    title: 'Summer Dress Floral',
+    description: 'Light floral dress perfect for summer days',
+    price: 44.99,
+    thumbnail: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400&q=80'],
+    stock: 80,
+    rating: 4.4,
+    categorySlug: 'clothing',
+  },
+  {
+    title: 'Leather Jacket',
+    description: 'Classic leather jacket with a modern fit',
+    price: 199.99,
+    thumbnail: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80'],
+    stock: 40,
+    rating: 4.8,
+    categorySlug: 'clothing',
+  },
 
   // Home & Garden
   {
     title: 'LED Desk Lamp',
-    description: 'Modern LED desk lamp with adjustable brightness',
+    description: 'Modern LED desk lamp with adjustable brightness and color temperature',
     price: 39.99,
     thumbnail: 'https://images.unsplash.com/photo-1565636192335-14e2ca59ba87?w=400&q=80',
     images: ['https://images.unsplash.com/photo-1565636192335-14e2ca59ba87?w=400&q=80'],
     stock: 100,
     rating: 4.5,
-    categorySlug: 'home-and-garden',
+    categorySlug: 'home-garden',
   },
   {
     title: 'Throw Pillow Set',
-    description: 'Comfortable throw pillows for couch and bed',
+    description: 'Comfortable throw pillows for couch and bed decoration',
     price: 49.99,
     thumbnail: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80',
     images: ['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80'],
     stock: 80,
     rating: 4.4,
-    categorySlug: 'home-and-garden',
+    categorySlug: 'home-garden',
   },
   {
     title: 'Indoor Plant Pot',
@@ -290,7 +446,27 @@ export const productsData = [
     images: ['https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&q=80'],
     stock: 150,
     rating: 4.3,
-    categorySlug: 'home-and-garden',
+    categorySlug: 'home-garden',
+  },
+  {
+    title: 'Scented Candle Set',
+    description: 'Set of 3 hand-poured scented candles',
+    price: 34.99,
+    thumbnail: 'https://images.unsplash.com/photo-1602523961359-f9e550a7c0b6?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1602523961359-f9e550a7c0b6?w=400&q=80'],
+    stock: 120,
+    rating: 4.6,
+    categorySlug: 'home-garden',
+  },
+  {
+    title: 'Bamboo Shelf Organizer',
+    description: 'Eco-friendly bamboo shelf for bathroom or kitchen',
+    price: 29.99,
+    thumbnail: 'https://images.unsplash.com/photo-1591488320449-011701bb6700?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1591488320449-011701bb6700?w=400&q=80'],
+    stock: 90,
+    rating: 4.5,
+    categorySlug: 'home-garden',
   },
 
   // Sports & Outdoors
@@ -302,7 +478,7 @@ export const productsData = [
     images: ['https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&q=80'],
     stock: 120,
     rating: 4.6,
-    categorySlug: 'sports-and-outdoors',
+    categorySlug: 'sports-outdoors',
   },
   {
     title: 'Camping Backpack 60L',
@@ -312,22 +488,42 @@ export const productsData = [
     images: ['https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=80'],
     stock: 60,
     rating: 4.7,
-    categorySlug: 'sports-and-outdoors',
+    categorySlug: 'sports-outdoors',
   },
   {
-    title: 'Water Bottle Insulated',
-    description: 'Keep drinks cold for 24 hours',
+    title: 'Insulated Water Bottle',
+    description: 'Keep drinks cold for 24 hours or hot for 12 hours',
     price: 29.99,
     thumbnail: 'https://images.unsplash.com/photo-1602143407151-7111542de6e9?w=400&q=80',
     images: ['https://images.unsplash.com/photo-1602143407151-7111542de6e9?w=400&q=80'],
     stock: 200,
     rating: 4.5,
-    categorySlug: 'sports-and-outdoors',
+    categorySlug: 'sports-outdoors',
+  },
+  {
+    title: 'Adjustable Dumbbell Set',
+    description: 'Space-saving adjustable dumbbells for home gym',
+    price: 249.99,
+    thumbnail: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80'],
+    stock: 30,
+    rating: 4.8,
+    categorySlug: 'sports-outdoors',
+  },
+  {
+    title: 'Jump Rope Speed',
+    description: 'Lightweight speed jump rope for cardio workouts',
+    price: 14.99,
+    thumbnail: 'https://images.unsplash.com/photo-1578262825743-a199d3fd1076?w=400&q=80',
+    images: ['https://images.unsplash.com/photo-1578262825743-a199d3fd1076?w=400&q=80'],
+    stock: 250,
+    rating: 4.4,
+    categorySlug: 'sports-outdoors',
   },
 ];
 
-export async function seedProducts() {
-  console.log('🌱 Seeding products...');
+export async function seedProducts(prisma: PrismaClient) {
+  console.log('Seeding products...');
 
   let createdCount = 0;
 
@@ -337,7 +533,7 @@ export async function seedProducts() {
     });
 
     if (!category) {
-      console.warn(`✗ Category not found: ${productData.categorySlug}`);
+      console.warn(`Category not found: ${productData.categorySlug}`);
       continue;
     }
 
@@ -355,8 +551,8 @@ export async function seedProducts() {
     });
 
     createdCount++;
-    console.log(`✓ Created product: ${product.title}`);
+    console.log(`Created product: ${product.title}`);
   }
 
-  console.log(`✓ Total products seeded: ${createdCount}`);
+  console.log(`Total products seeded: ${createdCount}`);
 }

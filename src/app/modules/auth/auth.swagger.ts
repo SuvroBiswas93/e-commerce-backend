@@ -35,7 +35,7 @@
  *     summary: Create a new user account
  *     tags:
  *       - Authentication
- *      security:
+ *     security:
  *       - bearerAuth: []
  *     requestBody:
  *       required: true
