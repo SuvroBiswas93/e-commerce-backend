@@ -9,13 +9,13 @@ async function startServer() {
   try {
     // Test database connection
     await prisma.$queryRaw`SELECT 1`;
-    logger.info('✓ Database connection established');
+    logger.info('Database connection established');
 
     const server = app.listen(PORT, () => {
-      logger.info(`✓ Server is running on port ${PORT}`);
-      logger.info(`✓ Environment: ${env.NODE_ENV}`);
-      logger.info(`✓ API URL: ${env.API_BASE_URL}`);
-      logger.info(`✓ Swagger docs: ${env.API_BASE_URL}/api/docs`);
+      logger.info(`Server is running on port ${PORT}`);
+      logger.info(`Environment: ${env.NODE_ENV}`);
+      logger.info(`API URL: ${env.API_BASE_URL}`);
+      logger.info(`Swagger docs: ${env.API_BASE_URL}/api/docs`);
     });
 
     // Graceful shutdown
