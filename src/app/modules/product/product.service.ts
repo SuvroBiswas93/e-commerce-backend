@@ -11,7 +11,8 @@ export class ProductService {
 
     if (search) {
       where.title = {
-        search: search,
+        contains: search,
+        mode: 'insensitive',
       };
     }
 
