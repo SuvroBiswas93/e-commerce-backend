@@ -2,7 +2,7 @@
 
 A production-ready REST API backend for a mini e-commerce application built with Node.js, TypeScript, Express, PostgreSQL, and Prisma.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Architecture](#architecture)
@@ -20,10 +20,11 @@ A production-ready REST API backend for a mini e-commerce application built with
 - [Assumptions](#assumptions)
 - [Limitations](#limitations)
 
-## 🎯 Overview
+## Overview
 
 This backend provides a complete REST API for an e-commerce application with:
 
+- **Authentication**: User registration and login with JWT tokens
 - **Product Management**: Listing, searching, and filtering products
 - **Category Management**: Organizing products into categories
 - **Pagination**: Server-side pagination with configurable limits
@@ -33,16 +34,17 @@ This backend provides a complete REST API for an e-commerce application with:
 - **Error Handling**: Structured error responses with detailed messages
 - **Documentation**: Interactive Swagger API documentation
 - **Testing**: Unit tests using Jest
+- **Logging**: Structured logging with Winston and daily rotation
 - **Docker**: Containerized deployment with Docker Compose
 
-## 🏗️ Architecture
+## Architecture
 
 The backend follows a **Modular Monolith + Layered Architecture** pattern inspired by NestJS:
 
 ```
 Routes
   ↓
-Middleware (Validation, Error Handling)
+Middleware (Validation, Authentication, Error Handling)
   ↓
 Controller (Request/Response Handling)
   ↓
@@ -61,42 +63,48 @@ PostgreSQL Database
 - **Database-Level Operations**: Filtering, searching, and pagination happen at the database level for performance
 - **Type Safety**: Full TypeScript implementation for type safety and better developer experience
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology | Version |
 |----------|------------|---------|
 | Runtime | Node.js LTS | 20+ |
-| Language | TypeScript | 5.4+ |
-| Framework | Express | 5.0+ |
-| ORM | Prisma | 5.14+ |
+| Language | TypeScript | 6.0+ |
+| Framework | Express | 5.2+ |
+| ORM | Prisma | 7.8+ |
 | Database | PostgreSQL | 16+ |
-| Validation | Zod | 3.22+ |
-| Testing | Jest | 29.7+ |
-| Documentation | Swagger/OpenAPI | 3.0 |
+| Validation | Zod | 4.4+ |
+| Authentication | JWT (jsonwebtoken + bcryptjs) | 9.0+ / 3.0+ |
+| Testing | Jest | 30.4+ |
+| Documentation | Swagger/OpenAPI (swagger-jsdoc + swagger-ui-express) | 3.0 |
 | Package Manager | pnpm | 8.0+ |
 | Containerization | Docker | Latest |
-| Logging | Winston | 3.14+ |
-| Development | tsx | 4.15+ |
+| Logging | Winston + daily-rotate-file | 3.19+ |
+| Development | tsx | 4.22+ |
 | Build | tsup, tsc-alias | Latest |
+| Code Quality | ESLint, Prettier, Husky, lint-staged | Latest |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ecommerce-backend/
 ├── .editorconfig
+├── .env
 ├── .env.example
 ├── .gitignore
 ├── .eslintrc.json
 ├── .husky/
-├── README.md
 ├── CONVENTIONS.md
+├── README.md
 ├── docker-compose.yml
 ├── Dockerfile
 ├── package.json
 ├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── prisma.config.ts
 ├── tsconfig.json
 ├── jest.config.js
 ├── prettier.config.js
+├── tsup.config.ts
 │
 ├── prisma/
 │   └── schema.prisma
@@ -114,18 +122,28 @@ ecommerce-backend/
 │   ├── app/
 │   │   ├── config/
 │   │   │   ├── index.ts
-│   │   │   ├── env.config.ts
 │   │   │   ├── app.config.ts
+│   │   │   ├── env.config.ts
 │   │   │   ├── swagger.config.ts
 │   │   │   └── winston.config.ts
 │   │   │
 │   │   ├── middleware/
+│   │   │   ├── index.ts
 │   │   │   ├── async-handler.ts
+│   │   │   ├── authenticate.ts
 │   │   │   ├── error-middleware.ts
 │   │   │   ├── not-found-middleware.ts
 │   │   │   └── zod-validation.ts
 │   │   │
 │   │   ├── modules/
+│   │   │   ├── auth/
+│   │   │   │   ├── auth.controller.ts
+│   │   │   │   ├── auth.interface.ts
+│   │   │   │   ├── auth.routes.ts
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   ├── auth.swagger.ts
+│   │   │   │   └── auth.validation.ts
+│   │   │   │
 │   │   │   ├── product/
 │   │   │   │   ├── product.controller.ts
 │   │   │   │   ├── product.interface.ts
@@ -151,10 +169,13 @@ ecommerce-backend/
 │   │   └── errors/
 │   │       └── app-error.ts
 │   │
+│   ├── types/
+│   │   └── express.d.ts
+│   │
 │   └── utils/
 │       ├── index.ts
-│       ├── success-response.ts
-│       └── generate-slug.ts
+│       ├── generate-slug.ts
+│       └── success-response.ts
 │
 ├── tests/
 │   └── unit/
@@ -170,7 +191,7 @@ ecommerce-backend/
     └── rejections/
 ```
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -199,7 +220,7 @@ cp .env.example .env
 
 4. **Configure environment variables**
 ```bash
-# Edit .env with your database and server configuration
+# Edit .env with your database, JWT, and server configuration
 nano .env
 ```
 
@@ -220,9 +241,9 @@ pnpm run db:seed
 pnpm run dev
 ```
 
-The API will be available at `http://localhost:8000/health`
+The API will be available at `http://localhost:8000`
 
-## 🔧 Environment Variables
+## Environment Variables
 
 Create a `.env` file based on `.env.example`:
 
@@ -232,13 +253,17 @@ NODE_ENV=development
 
 # Server
 PORT=8000
-API_BASE_URL=http://localhost:8000/health
+API_BASE_URL=http://localhost:8000
 
 # Database
 DATABASE_URL=postgresql://user:password@localhost:5432/ecommerce_db
 
 # CORS
 FRONTEND_URL=http://localhost:3000
+
+# JWT
+JWT_SECRET=your-super-secret-key-min-32-chars-long!!
+JWT_EXPIRES_IN=7d
 
 # Logging
 LOG_LEVEL=debug
@@ -249,7 +274,7 @@ SWAGGER_DESCRIPTION=Production-ready REST API for e-commerce application
 SWAGGER_VERSION=1.0.0
 ```
 
-## 🐳 Docker Setup
+## Docker Setup
 
 ### Run with Docker Compose
 
@@ -284,9 +309,17 @@ environment:
   PORT: 8000
 ```
 
-## 🗄️ Database Setup
+## Database Setup
 
 ### Database Schema
+
+#### Users Table
+- `id` (UUID, Primary Key)
+- `name` (String)
+- `email` (String, Unique)
+- `password` (String, hashed)
+- `createdAt` (DateTime)
+- `updatedAt` (DateTime)
 
 #### Categories Table
 - `id` (UUID, Primary Key)
@@ -327,7 +360,7 @@ pnpm run db:generate
 pnpm run db:studio
 ```
 
-## 🚀 Development
+## Development
 
 ### Available Scripts
 
@@ -357,14 +390,12 @@ pnpm run test:cov         # Generate coverage report
 pnpm run lint             # Run ESLint
 pnpm run format           # Format code with Prettier
 pnpm run format:check     # Check formatting
+pnpm run prepare          # Install Husky hooks
 
 # Docker
 pnpm run docker:build     # Build Docker image
 pnpm run docker:up        # Start Docker services
 pnpm run docker:down      # Stop Docker services
-
-# Documentation
-pnpm run swagger:generate # Generate Swagger spec
 ```
 
 ### Environment Setup for Development
@@ -377,7 +408,7 @@ pnpm install
 cp .env.example .env
 
 # Configure database
-# Edit .env and set DATABASE_URL
+# Edit .env and set DATABASE_URL and JWT_SECRET
 
 # Run migrations
 pnpm run db:migrate:dev
@@ -389,7 +420,7 @@ pnpm run db:seed
 pnpm run dev
 ```
 
-## 🏭 Building for Production
+## Building for Production
 
 ```bash
 # Build the project
@@ -401,14 +432,99 @@ pnpm run start
 
 The build output will be in the `dist/` directory.
 
-## 📡 API Endpoints
+## API Endpoints
 
-### Base URL
+### Authentication
+
+All protected endpoints require an `Authorization: Bearer <token>` header.
+
+#### Register
+```http
+POST /api/auth/register
 ```
-http://localhost:8000/api
+
+**Request Body:**
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (201):**
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "User registered successfully",
+  "data": {
+    "user": {
+      "id": "uuid",
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "token": "jwt-token"
+  }
+}
+```
+
+#### Login
+```http
+POST /api/auth/login
+```
+
+**Request Body:**
+```json
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (200):**
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": "uuid",
+      "name": "John Doe",
+      "email": "john@example.com"
+    },
+    "token": "jwt-token"
+  }
+}
+```
+
+#### Get Profile
+```http
+GET /api/auth/me
+```
+
+**Headers:** `Authorization: Bearer <token>`
+
+**Response (200):**
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Profile fetched successfully",
+  "data": {
+    "id": "uuid",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z"
+  }
+}
 ```
 
 ### Products Endpoints
+
+All product endpoints require authentication (`Authorization: Bearer <token>`).
 
 #### Get All Products
 ```http
@@ -491,6 +607,8 @@ GET /api/products/{id}
 
 ### Categories Endpoints
 
+All category endpoints require authentication (`Authorization: Bearer <token>`).
+
 #### Get All Categories
 ```http
 GET /api/categories
@@ -535,19 +653,19 @@ GET /health
 }
 ```
 
-## 📚 Swagger Documentation
+## Swagger Documentation
 
 Interactive API documentation is available at:
 ```
 http://localhost:8000/api/docs
 ```
 
-The Swagger spec is generated from JSDoc comments in route files and is available at:
+The Swagger/OpenAPI 3.0 spec is generated from dedicated swagger definition files in each module and is available at:
 ```
 http://localhost:8000/api/swagger.json
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 
@@ -577,52 +695,51 @@ tests/unit/
 ### Test Coverage
 
 Tests cover:
-- ✅ Service business logic
-- ✅ Pagination functionality
-- ✅ Search functionality
-- ✅ Category filtering
-- ✅ 404 error handling
-- ✅ Validation logic
+- Service business logic
+- Pagination functionality
+- Search functionality
+- Category filtering
+- 404 error handling
+- Validation logic
 
-## 📋 Assumptions
+## Assumptions
 
 1. **Database-Level Operations**: All search, filtering, and pagination are performed at the database level using PostgreSQL for performance
 2. **UUID IDs**: All entities use UUID for primary keys for better scalability and distribution
 3. **JSON Images Array**: Product images are stored as a JSON array in the database
-4. **Slug Generation**: Category and product slugs are automatically generated from names using kebab-case
+4. **Slug Generation**: Category slugs are automatically generated from names using kebab-case
 5. **CORS Enabled**: CORS is enabled for the frontend URL specified in environment variables
 6. **Logging**: All requests and errors are logged using Winston with daily rotation
-7. **No Authentication**: This API doesn't include authentication (can be added as future enhancement)
+7. **JWT Authentication**: The API uses JWT-based authentication; tokens are required for protected endpoints
 8. **Frontend State Only**: Cart functionality is handled by the frontend using local state
 
-## ⚠️ Limitations
+## Limitations
 
-1. **No Authentication/Authorization**: The API is public without authentication. In production, add JWT or session-based auth
+1. **No Admin Endpoints**: Admin CRUD operations for products/categories not exposed via routes (only GET endpoints are routed)
 2. **No Payment Processing**: Shopping cart and checkout are frontend-only; payment processing needs integration
-3. **No User Accounts**: No user registration, login, or profile management implemented
-4. **No Order Management**: Order creation and tracking not implemented
-5. **No Admin Panel**: Admin endpoints for CRUD operations not included
-6. **No Rate Limiting**: API rate limiting should be added for production
-7. **No Caching**: Response caching (Redis) not implemented
-8. **No File Upload**: Product images are external URLs; file upload to Blob storage not included
-9. **Single Region**: Database and API are single-region; multi-region deployment not configured
-10. **No CI/CD**: GitHub Actions or similar CI/CD pipelines not configured
+3. **No Order Management**: Order creation and tracking not implemented
+4. **No Rate Limiting**: API rate limiting should be added for production
+5. **No Caching**: Response caching (Redis) not implemented
+6. **No File Upload**: Product images are external URLs; file upload to Blob storage not included
+7. **Single Region**: Database and API are single-region; multi-region deployment not configured
+8. **No CI/CD**: GitHub Actions or similar CI/CD pipelines not configured
+9. **No Migrations Directory**: Initial Prisma migrations have not been generated yet (run `pnpm run db:migrate:dev` to create them)
 
-## 🤝 Contributing
+## Contributing
 
 1. Create a feature branch: `git checkout -b feature/your-feature`
 2. Commit changes: `git commit -am 'Add new feature'`
 3. Push to branch: `git push origin feature/your-feature`
 4. Submit a pull request
 
-## 📝 License
+## License
 
-MIT License - see LICENSE file for details
+MIT
 
-## 📧 Support
+## Support
 
 For issues and questions, please create an issue in the repository or contact the development team.
 
 ---
 
-**Built with ❤️ using Node.js, TypeScript, Express, PostgreSQL, and Prisma**
+**Built with Node.js, TypeScript, Express, PostgreSQL, and Prisma**

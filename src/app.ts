@@ -37,6 +37,19 @@ export const createApp = (): Express => {
     next();
   });
 
+  // Root route
+  app.get('/', (_req, res) => {
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: 'E-Commerce API',
+      version: '1.0.0',
+      docs: `${env.API_BASE_URL}${APP_CONFIG.SWAGGER_PATH}`,
+     
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   // Health check
   app.get(
     APP_CONFIG.HEALTH_CHECK_PATH,

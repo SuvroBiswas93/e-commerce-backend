@@ -35,6 +35,8 @@
  *     summary: Create a new user account
  *     tags:
  *       - Authentication
+ *      security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -97,6 +99,8 @@
  *     summary: Authenticate user and get JWT token
  *     tags:
  *       - Authentication
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
