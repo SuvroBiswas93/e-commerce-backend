@@ -40,6 +40,25 @@
  *         schema:
  *           type: string
  *         description: Filter products by category slug
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           enum: [newest, price_asc, price_desc, top_rated]
+ *           default: newest
+ *         description: "Sort products: newest, price_asc (low to high), price_desc (high to low), top_rated"
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *           minimum: 0
+ *         description: Minimum price filter
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *           minimum: 0
+ *         description: Maximum price filter
  *     responses:
  *       200:
  *         description: Products fetched successfully

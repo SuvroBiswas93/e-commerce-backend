@@ -41,9 +41,14 @@ export interface IPaginatedResponse<T> {
   meta: IPaginationMeta;
 }
 
+export type SortOption = 'newest' | 'price_asc' | 'price_desc' | 'top_rated';
+
 export interface IProductFilters {
   page: number;
   limit: number;
   search?: string;
   category?: string;
+  sort?: SortOption;
+  minPrice?: number;
+  maxPrice?: number;
 }

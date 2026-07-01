@@ -24,7 +24,23 @@ export const getProductsSchema = z.object({
       }),
     search: z.string().optional(),
     category: z.string().optional(),
-  }),
+    sort: z.enum(['newest', 'price_asc', 'price_desc', 'top_rated']).optional(),
+    minPrice: z
+      .string()
+      .optional()
+      .transform((val) => (val ? parseFloat(val) : undefined))
+      .refine((val) => val === undefined || !isNaN(val), { message: 'minPrice must be a valid number' })
+      .refine((val) => val === undefined || val >= 0, { message: 'minPrice must be non-negative' }),
+    maxPrice: z
+      .string()
+      .optional()
+      .transform((val) => (val ? parseFloat(val) : undefined))
+      .refine((val) => val === undefined || !isNaN(val), { message: 'maxPrice must be a valid number' })
+      .refine((val) => val === undefined || val >= 0, { message: 'maxPrice must be non-negative' }),
+  }).refine(
+    (data) => data.minPrice === undefined || data.maxPrice === undefined || data.minPrice <= data.maxPrice,
+    { message: 'minPrice must be less than or equal to maxPrice', path: ['minPrice'] },
+  ),
 });
 
 export const getProductByIdSchema = z.object({

@@ -5,13 +5,16 @@ import { GetProductsQuery, GetProductByIdParams } from './product.validation.js'
 
 export class ProductController {
   async getAll(req: Request, res: Response): Promise<void> {
-    const { page, limit, search, category } = req.query as unknown as GetProductsQuery;
+    const { page, limit, search, category, sort, minPrice, maxPrice } = req.query as unknown as GetProductsQuery;
 
     const result = await productService.getProducts({
       page,
       limit,
       search,
       category,
+      sort,
+      minPrice,
+      maxPrice,
     });
 
     res.status(200).json(

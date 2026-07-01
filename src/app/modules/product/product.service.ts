@@ -1,10 +1,18 @@
 import prisma from '@lib/database/prisma.js';
 import { NotFoundError } from '@lib/errors/app-error.js';
-import { IProduct, IPaginatedResponse, IProductFilters, ICreateProduct } from './product.interface.js';
+import { IProduct, IPaginatedResponse, IProductFilters, ICreateProduct, SortOption } from './product.interface.js';
+import { Prisma } from '@prisma/client';
+
+const sortMap: Record<SortOption, Prisma.ProductOrderByWithRelationInput> = {
+  newest: { createdAt: 'desc' },
+  price_asc: { price: 'asc' },
+  price_desc: { price: 'desc' },
+  top_rated: { rating: 'desc' },
+};
 
 export class ProductService {
   async getProducts(filters: IProductFilters): Promise<IPaginatedResponse<IProduct>> {
-    const { page, limit, search, category } = filters;
+    const { page, limit, search, category, sort, minPrice, maxPrice } = filters;
 
     // Build where clause for database-level filtering
     const where: any = {};
@@ -20,6 +28,12 @@ export class ProductService {
       where.category = {
         slug: category,
       };
+    }
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      where.price = {};
+      if (minPrice !== undefined) where.price.gte = minPrice;
+      if (maxPrice !== undefined) where.price.lte = maxPrice;
     }
 
     // Get total count with filters applied
@@ -39,7 +53,7 @@ export class ProductService {
       },
       skip: (page - 1) * limit,
       take: limit,
-      orderBy: { createdAt: 'desc' },
+      orderBy: sortMap[sort || (minPrice !== undefined || maxPrice !== undefined ? 'price_asc' : 'newest')],
     });
 
     const totalPages = Math.ceil(total / limit);
