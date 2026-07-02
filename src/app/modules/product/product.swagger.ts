@@ -119,8 +119,6 @@
  *     summary: Get product by ID
  *     tags:
  *       - Products
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -145,12 +143,6 @@
  *                   type: string
  *                 data:
  *                   $ref: '#/components/schemas/Product'
- *       401:
- *         description: Unauthorized - missing or invalid token
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
  *       404:
  *         description: Product not found
  */
