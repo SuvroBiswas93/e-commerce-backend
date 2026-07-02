@@ -381,6 +381,9 @@ pnpm run db:push          # Push schema to database
 pnpm run db:studio        # Open Prisma Studio
 pnpm run db:reset         # Reset database
 
+# Documentation
+pnpm run swagger:generate # Generate Swagger/OpenAPI spec
+
 # Testing
 pnpm run test             # Run all tests
 pnpm run test:watch       # Run tests in watch mode
@@ -524,7 +527,7 @@ GET /api/auth/me
 
 ### Products Endpoints
 
-All product endpoints require authentication (`Authorization: Bearer <token>`).
+The list endpoint requires authentication (`Authorization: Bearer <token>`). Getting a product by ID is publicly accessible.
 
 #### Get All Products
 ```http
@@ -536,6 +539,9 @@ GET /api/products?page=1&limit=10&search=shoe&category=mens-shoes
 - `limit` (integer, default: 10): Items per page (1-20)
 - `search` (string, optional): Search products by title
 - `category` (string, optional): Filter by category slug
+- `sort` (enum, optional): Sort products — `newest`, `price_asc` (low to high), `price_desc` (high to low), `top_rated`
+- `minPrice` (number, optional): Minimum price filter (non-negative)
+- `maxPrice` (number, optional): Maximum price filter (non-negative)
 
 **Response:**
 ```json
