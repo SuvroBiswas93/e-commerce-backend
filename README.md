@@ -10,7 +10,6 @@ A production-ready REST API backend for a mini e-commerce application built with
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
-- [Docker Setup](#docker-setup)
 - [Database Setup](#database-setup)
 - [Development](#development)
 - [Building for Production](#building-for-production)
@@ -35,7 +34,6 @@ This backend provides a complete REST API for an e-commerce application with:
 - **Documentation**: Interactive Swagger API documentation
 - **Testing**: Unit tests using Jest
 - **Logging**: Structured logging with Winston and daily rotation
-- **Docker**: Containerized deployment with Docker Compose
 
 ## Architecture
 
@@ -77,7 +75,6 @@ PostgreSQL Database
 | Testing | Jest | 30.4+ |
 | Documentation | Swagger/OpenAPI (swagger-jsdoc + swagger-ui-express) | 3.0 |
 | Package Manager | pnpm | 8.0+ |
-| Containerization | Docker | Latest |
 | Logging | Winston + daily-rotate-file | 3.19+ |
 | Development | tsx | 4.22+ |
 | Build | tsup, tsc-alias | Latest |
@@ -95,8 +92,6 @@ ecommerce-backend/
 ├── .husky/
 ├── CONVENTIONS.md
 ├── README.md
-├── docker-compose.yml
-├── Dockerfile
 ├── package.json
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
@@ -197,7 +192,7 @@ ecommerce-backend/
 
 - Node.js 20+ LTS
 - pnpm 8.0+
-- PostgreSQL 16+ (or use Docker)
+- PostgreSQL 16+
 - Git
 
 ### Setup Steps
@@ -272,41 +267,6 @@ LOG_LEVEL=debug
 SWAGGER_TITLE=E-Commerce API
 SWAGGER_DESCRIPTION=Production-ready REST API for e-commerce application
 SWAGGER_VERSION=1.0.0
-```
-
-## Docker Setup
-
-### Run with Docker Compose
-
-```bash
-# Build and start all services
-docker compose up
-
-# Run in background
-docker compose up -d
-
-# View logs
-docker compose logs -f
-
-# Stop services
-docker compose down
-
-# Reset everything (remove volumes)
-docker compose down -v
-```
-
-This will start:
-- **PostgreSQL**: Running on port 5432
-- **API**: Running on port 8000
-
-### Environment Variables for Docker
-
-Update the `.env` file or pass variables via `docker-compose.yml`:
-
-```yml
-environment:
-  DATABASE_URL: postgresql://user:password@postgres:5432/ecommerce_db
-  PORT: 8000
 ```
 
 ## Database Setup
@@ -394,11 +354,6 @@ pnpm run lint             # Run ESLint
 pnpm run format           # Format code with Prettier
 pnpm run format:check     # Check formatting
 pnpm run prepare          # Install Husky hooks
-
-# Docker
-pnpm run docker:build     # Build Docker image
-pnpm run docker:up        # Start Docker services
-pnpm run docker:down      # Stop Docker services
 ```
 
 ### Environment Setup for Development

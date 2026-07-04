@@ -22,10 +22,7 @@
     "db:studio": "prisma studio",
     "db:reset": "prisma migrate reset --force",
     "swagger:generate": "tsx scripts/generate-swagger.ts",
-    "prepare": "husky install",
-    "docker:build": "docker build -t ecommerce-backend .",
-    "docker:up": "docker compose up",
-    "docker:down": "docker compose down"
+    "prepare": "husky install"
   },
   "keywords": [
     "e-commerce",
